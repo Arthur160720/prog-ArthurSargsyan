@@ -1,4 +1,5 @@
 const {par} = require("./index");
+const {ask} = require("./read-from-terminal");
 
 function isEven(number) {
     return number % 2 === 0;
@@ -44,11 +45,11 @@ function isValidTriangle(n1, n2, n3) {
     return n1 + n2 + n3 === 180;
 }
 
-function findMaximumValue (number1, number2, number3) {
+function findMaximumValue(number1, number2, number3) {
     return Math.max(number1, number2, number3);
 }
 
-function findMinimumValue (number1, number2, number3) {
+function findMinimumValue(number1, number2, number3) {
     return Math.min(number1, number2, number3);
 }
 
@@ -64,28 +65,18 @@ function squareNumber(number) {
     return number ** 2;
 }
 
-function areaOfCube(side) {
-    return side ** 3;
-}
-
-function lateralSurface(side) {
-    return 6 * side * side;
-}
-
 function sortedDescending(array) {
-    let second_index;
-    for (let first_index = 0; first_index < array.length; first_index++) {
-        second_index = first_index - 1;
-        if (array[second_index] - array[first_index] < 0) return false;
+    for (let firstIndex = 0; firstIndex < array.length; firstIndex++) {
+        let secondIndex = firstIndex >= 1 ? firstIndex - 1 : 0;
+        if (array[secondIndex] - array[firstIndex] < 0) return false;
     }
     return true;
 }
 
 function sortedAscending(array) {
-    let second_index;
-    for (let first_index = 0; first_index < array.length; first_index++) {
-        second_index = first_index + 1;
-        if (array[second_index] - array[first_index] < 0) return false;
+    for (let firstIndex = 0; firstIndex < array.length; firstIndex++) {
+        let secondIndex = firstIndex + 1;
+        if (array[secondIndex] - array[firstIndex] < 0) return false;
     }
     return true;
 }
@@ -115,6 +106,128 @@ function checkPrime(number) {
     }
 }
 
+function random(min, max) {
+    return min + Math.floor(Math.random() * (max - min + 1));
+}
+
+function perfectNumber(number) {
+    let array = [];
+
+    for (let i = 1; i < 1000; i++) {
+        if (number % i === 0) {
+            array.push(i);
+        }
+    }
+
+    let sum = 0;
+    for (let i = 0; i < array.length; i++) {
+        sum += array[i];
+    }
+
+    if (number === sum - number) {
+        return true;
+    } else return false;
+
+}
+
+function duplicateNumbers(numbers) {
+    const unique = Array.from(new Set(numbers));
+
+    if (numbers.length === unique.length) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+async function readString(question) {
+    return ask(question);
+}
+
+function isLowerCase(str) {
+    for (let i = 0; i < str.length; i++) {
+        if (!(str.charCodeAt(i) > 96 && str.charCodeAt(i) < 123)) {
+            return false
+        }
+    }
+    return true;
+}
+
+function isUpperCase(str) {
+    for (let i = 0; i < str.length; i++) {
+        if (!(str.charCodeAt(i) > 64 && str.charCodeAt(i) < 91)) {
+            return false
+        }
+    }
+    return true;
+}
+
+function doesContainSomeSymbols(str) {
+    function doesContain(str, i) {
+        return (
+            str.charCodeAt(i) === 32 ||
+            str.charCodeAt(i) === 33 ||
+            str.charCodeAt(i) === 34 ||
+            str.charCodeAt(i) === 39 ||
+            str.charCodeAt(i) === 40 ||
+            str.charCodeAt(i) === 41 ||
+            str.charCodeAt(i) === 44 ||
+            str.charCodeAt(i) === 46 ||
+            str.charCodeAt(i) === 58 ||
+            str.charCodeAt(i) === 63
+        );
+    }
+
+    for (let i = 0; i < str.length; i++) {
+        if (!doesContain(str, i)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function isAlphabetWithSymbols(str) {
+    function doesContain(str, i) {
+        return (
+            str.charCodeAt(i) === 32 ||
+            str.charCodeAt(i) === 33 ||
+            str.charCodeAt(i) === 34 ||
+            str.charCodeAt(i) === 39 ||
+            str.charCodeAt(i) === 40 ||
+            str.charCodeAt(i) === 41 ||
+            str.charCodeAt(i) === 44 ||
+            str.charCodeAt(i) === 46 ||
+            str.charCodeAt(i) === 58 ||
+            str.charCodeAt(i) === 63 ||
+            str.charCodeAt(i) > 64 && str.charCodeAt(i) < 91 ||
+            str.charCodeAt(i) > 96 && str.charCodeAt(i) < 123
+        );
+    }
+
+    for (let i = 0; i < str.length; i++) {
+        if (!doesContain(str, i)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function isLowerAndUpperCase(str) {
+    function doesContain(str, i) {
+        return (
+            str.charCodeAt(i) > 64 && str.charCodeAt(i) < 91 ||
+            str.charCodeAt(i) > 96 && str.charCodeAt(i) < 123
+        );
+    }
+
+    for (let i = 0; i < str.length; i++) {
+        if (!doesContain(str, i)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 
 module.exports = {
     isEven,
@@ -131,11 +244,18 @@ module.exports = {
     doubleValues,
     changeSign,
     squareNumber,
-    areaOfCube,
-    lateralSurface,
     isNanOrNot,
     sortedDescending,
     sortedAscending,
     factorial,
-    checkPrime
+    checkPrime,
+    random,
+    perfectNumber,
+    duplicateNumbers,
+    readString,
+    isLowerCase,
+    isUpperCase,
+    doesContainSomeSymbols,
+    isAlphabetWithSymbols,
+    isLowerAndUpperCase
 }
